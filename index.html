@@ -92,21 +92,21 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 ============================================================ */
 .brand{display:flex;align-items:center;gap:0;text-decoration:none;line-height:1}
 .brand-stack{display:flex;flex-direction:column;align-items:flex-start}
-.brand-wm{display:flex;align-items:baseline;line-height:1;color:var(--paper)}
+.brand-wm{display:flex;align-items:baseline;line-height:1;color:var(--ink)}
 .brand-wm .a{
   font-family:var(--font-greek);font-style:italic;font-weight:500;
   font-size:54px;letter-spacing:-.02em;line-height:.78;
   display:inline-block;transform:translateY(.08em);margin-right:.03em;
-  color:var(--gold-bright);
+  color:var(--gold);
 }
 .brand-wm .rest{
   font-family:var(--font-script);font-weight:400;
-  font-size:30px;letter-spacing:-.01em;color:var(--paper);
+  font-size:30px;letter-spacing:-.01em;color:var(--ink);
 }
 .brand-sub{
   display:block;font-family:var(--font-serif);font-style:italic;font-weight:400;
-  font-size:10.5px;letter-spacing:.04em;color:var(--gold-bright);
-  margin-top:1px;border-top:1px solid var(--gold);padding-top:3px;
+  font-size:10.5px;letter-spacing:.04em;color:var(--red);
+  margin-top:1px;border-top:1px solid var(--red);padding-top:3px;
   width:100%;text-align:right;min-width:160px;
 }
 
@@ -115,24 +115,25 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 ============================================================ */
 .header{
   position:sticky;top:0;z-index:60;
-  background:var(--ink);
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
   transition:background .25s var(--ease);
 }
 .header-inner{
   display:flex;align-items:center;justify-content:space-between;
-  min-height:84px;color:var(--paper);
+  min-height:84px;color:var(--ink);
 }
 nav.primary{display:flex;gap:32px;align-items:center}
 nav.primary a{
   font-size:13px;font-weight:600;letter-spacing:.04em;
-  color:rgba(250,242,223,.78);text-transform:uppercase;
+  color:var(--ink-3);text-transform:uppercase;
   font-family:var(--font-mono);position:relative;padding:6px 0;
   transition:color .2s var(--ease);
 }
-nav.primary a:hover{color:var(--gold-bright)}
+nav.primary a:hover{color:var(--red)}
 nav.primary a::after{
   content:"";position:absolute;left:0;right:0;bottom:-2px;
-  height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;
+  height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;
   transition:transform .3s var(--ease);
 }
 nav.primary a:hover::after{transform:scaleX(1)}
@@ -561,15 +562,57 @@ nav.primary a:hover::after{transform:scaleX(1)}
 /* ============================================================
    FOOTER
 ============================================================ */
-.footer{padding:70px 0 40px;background:var(--ink);color:var(--paper)}
+.footer{padding:70px 0 40px;background:var(--cream);color:var(--ink)}
 .footer-inner{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:50px}
 @media (max-width:780px){.footer-inner{grid-template-columns:1fr 1fr}}
-.footer h4{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-bright);margin:0 0 16px;font-weight:700}
+.footer h4{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin:0 0 16px;font-weight:700}
 .footer ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
-.footer a{font-size:14px;color:rgba(250,242,223,.7);transition:color .2s var(--ease)}
-.footer a:hover{color:var(--gold-bright)}
-.footer .baseline{font-family:var(--font-serif);font-style:italic;font-size:15px;color:rgba(250,242,223,.65);margin-top:18px;line-height:1.55;max-width:36ch}
-.footer-bot{display:flex;justify-content:space-between;gap:20px;padding-top:32px;border-top:1px solid rgba(250,242,223,.1);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:rgba(250,242,223,.5);font-weight:600}
+.footer a{font-size:14px;color:var(--ink-3);transition:color .2s var(--ease)}
+.footer a:hover{color:var(--red)}
+.footer .baseline{font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--ink-3);margin-top:18px;line-height:1.55;max-width:36ch}
+.footer-bot{display:flex;justify-content:space-between;gap:20px;padding-top:32px;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-3);font-weight:600}
+
+/* ============================================================
+   VIBE — repère étudiant
+============================================================ */
+.vibe{padding:110px 0;background:var(--paper)}
+.vibe-top{max-width:680px;margin:0 auto;text-align:center;margin-bottom:60px}
+.vibe h2{
+  font-family:var(--font-display);font-size:clamp(48px,7vw,86px);
+  line-height:.92;margin:14px 0 24px;text-transform:uppercase;
+}
+.vibe h2 em{
+  font-family:var(--font-script);font-style:normal;font-weight:400;
+  color:var(--red);font-size:.68em;text-transform:none;
+  display:inline-block;transform:translateY(.05em);letter-spacing:-.02em;
+}
+.vibe-lead{font-size:17px;color:var(--ink-3);line-height:1.7;margin:0}
+.vibe-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
+@media (max-width:800px){.vibe-grid{grid-template-columns:1fr}}
+.vibe-card{
+  padding:36px 30px;background:var(--white);border-radius:var(--r-md);
+  border:1px solid var(--line-light);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+.vibe-card:hover{transform:translateY(-4px);box-shadow:0 24px 40px -20px rgba(26,20,17,.16)}
+.vibe-ico{
+  width:52px;height:52px;border-radius:14px;margin-bottom:20px;
+  background:var(--red-soft);border:1px solid rgba(189,58,32,.15);
+  display:grid;place-items:center;font-size:24px;
+}
+.vibe-card h3{
+  font-family:var(--font-serif);font-style:italic;font-weight:600;
+  font-size:22px;margin:0 0 10px;color:var(--ink);line-height:1.2;
+}
+.vibe-card p{margin:0;font-size:14px;color:var(--ink-3);line-height:1.65}
+.vibe-stat{
+  display:flex;align-items:baseline;gap:6px;
+  font-family:var(--font-display);font-size:36px;color:var(--red);
+  margin-bottom:8px;line-height:1;
+}
+.vibe-stat small{font-family:var(--font-mono);font-size:12px;color:var(--ink-3);font-weight:700}
 
 /* ============================================================
    DRAWER (panier)
@@ -915,12 +958,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
 <header class="header" id="hdr">
   <div class="container header-inner">
     <a href="#" class="brand" aria-label="alpha — accueil">
-      <div class="brand-stack">
-        <div class="brand-wm">
-          <span class="a">α</span><span class="rest">lpha</span>
-        </div>
-        <span class="brand-sub">Resto à la Parisienne</span>
-      </div>
+      <img src="https://hbkpkpvqsykjnmoyxkdg.supabase.co/storage/v1/object/public/logos/alpharesto/logo.png?v=2" alt="αlpha" style="height:52px;width:auto;object-fit:contain;display:block;" />
     </a>
     <nav class="primary">
       <a href="#menu">La carte</a>
@@ -987,6 +1025,57 @@ nav.primary a:hover::after{transform:scaleX(1)}
   </div>
 </div>
 
+<!-- VIBE — repère étudiant -->
+<section class="vibe" id="vibe">
+  <div class="container">
+    <div class="vibe-top">
+      <span class="eyebrow">Le repère des étudiants lillois</span>
+      <h2>VOTRE ADRESSE<br>à <em>Lille.</em></h2>
+      <p class="vibe-lead">Depuis 2018, αlpha est l'endroit où les étudiants se retrouvent, se régalent et reviennent. Les BDE se donnent rendez-vous ici, les habitués connaissent Oussama par son prénom.</p>
+    </div>
+    <div class="vibe-grid">
+      <div class="vibe-card">
+        <div class="vibe-ico">🎓</div>
+        <div class="vibe-stat">200<small>+ BDE</small></div>
+        <h3>Repère des associations</h3>
+        <p>Arts, IUT, facs de Lille — toutes les assocs se passent l'adresse. Commandes groupées, soirées d'intégration, afterworks : αlpha s'adapte sans problème.</p>
+      </div>
+      <div class="vibe-card">
+        <div class="vibe-ico">🤝</div>
+        <div class="vibe-stat">4,7<small>/5 Google</small></div>
+        <h3>L'accueil avant tout</h3>
+        <p>Oussama et son équipe connaissent vos prénoms. Pas de comptoir froid — ici on échange, on rigole, on se sent chez soi. C'est ça, l'esprit rue Colbert.</p>
+      </div>
+      <div class="vibe-card">
+        <div class="vibe-ico">📍</div>
+        <div class="vibe-stat">443<small>avis</small></div>
+        <h3>L'adresse incontournable</h3>
+        <p>Des clients qui viennent spécialement de Belgique. Pas un hasard — quand on goûte le makloub d'Oussama, on comprend pourquoi tout le monde en parle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="container story-inner">
+    <div class="story-img">
+      <img src="https://images.unsplash.com/photo-1577906096429-f73c2c312435?auto=format&fit=crop&w=900&q=80" alt="Cuisine alpha" />
+    </div>
+    <div>
+      <span class="eyebrow on-dark">Notre histoire</span>
+      <h2>UNE CUISINE<br><em>familiale,</em><br>UNE VRAIE MAISON.</h2>
+      <blockquote class="story-quote">"Ce qui me touche le plus, c'est quand un client revient de Tunisie et me dit que notre makloub a le goût de chez lui."</blockquote>
+      <p>αlpha a ouvert rue Colbert avec une idée simple : faire à Lille ce qu'on faisait à la maison. Le lablebi du dimanche matin, le fricassé qu'on glisse encore chaud dans le pain, le makloub qu'on partage à table.</p>
+      <p>Et à côté, parce qu'on est aussi à Lille : des kebabs taillés à la broche, des pizzas généreuses pour les soirs étudiants, des tacos et des burgers qui tiennent la route.</p>
+      <div class="story-sig">
+        <strong>Oussama &amp; l'équipe</strong>
+        <span>αlpha · Resto à la Parisienne</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PITCH -->
 <section class="pitch">
   <div class="container">
@@ -1014,7 +1103,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
         <span class="num">03</span>
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></div>
         <h3>Confirmation directe</h3>
-        <p>L'équipe valide votre commande dans la minute et vous envoie un SMS dès qu'elle est prête.</p>
+        <p>L'équipe valide votre commande dans la minute. Suivez l'état en temps réel depuis cette page.</p>
       </div>
       <div class="feature">
         <span class="num">04</span>
@@ -1034,38 +1123,20 @@ nav.primary a:hover::after{transform:scaleX(1)}
         <span class="eyebrow">La carte</span>
         <h2>DE LA TUNISIE<br>à la <em>rue Colbert.</em></h2>
       </div>
-      <p>Une sélection de nos plats phares. Cliquez sur un plat pour voir le détail, les options et l'ajouter à votre commande.</p>
+      <p>Spécialités tunisiennes, kebabs, pizzas, tacos, burgers — tous préparés maison. Cliquez sur un plat pour l'ajouter à votre commande.</p>
     </div>
 
-    <div class="cat-tabs">
-      <button class="cat-tab is-active" data-cat="all">Tout <span class="c">12</span></button>
-      <button class="cat-tab" data-cat="tunisien">Spécialités tunisiennes <span class="c">4</span></button>
-      <button class="cat-tab" data-cat="kebab">Sandwichs &amp; Kebabs <span class="c">2</span></button>
-      <button class="cat-tab" data-cat="tacos">Tacos &amp; Burgers <span class="c">2</span></button>
-      <button class="cat-tab" data-cat="pizza">Pizzas <span class="c">2</span></button>
-      <button class="cat-tab" data-cat="pates">Pâtes &amp; Salades <span class="c">2</span></button>
+    <div id="menuLoading" style="text-align:center;padding:48px 0;color:var(--ink-3);font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase">Chargement de la carte…</div>
+
+    <div class="menu-grid" id="featuredGrid" style="display:none"></div>
+
+    <div id="seeAllWrap" style="text-align:center;margin:44px 0 0;display:none">
+      <button class="btn-ghost" id="seeAllBtn" onclick="showFullMenu()">Voir tout le menu →</button>
     </div>
 
-    <div class="menu-grid" id="menuGrid"></div>
-  </div>
-</section>
-
-<!-- STORY -->
-<section class="story" id="story">
-  <div class="container story-inner">
-    <div class="story-img">
-      <img src="https://images.unsplash.com/photo-1577906096429-f73c2c312435?auto=format&fit=crop&w=900&q=80" alt="Cuisine alpha" />
-    </div>
-    <div>
-      <span class="eyebrow on-dark">Notre histoire</span>
-      <h2>UNE CUISINE<br><em>familiale,</em><br>UNE VRAIE MAISON.</h2>
-      <blockquote class="story-quote">"Ce qui me touche le plus, c'est quand un client revient de Tunisie et me dit que notre makloub a le goût de chez lui."</blockquote>
-      <p>αlpha a ouvert rue Colbert avec une idée simple : faire à Lille ce qu'on faisait à la maison. Le lablebi du dimanche matin, le fricassé qu'on glisse encore chaud dans le pain, le makloub qu'on partage à table.</p>
-      <p>Et à côté, parce qu'on est aussi à Lille : des kebabs taillés à la broche, des pizzas généreuses pour les soirs étudiants, des tacos et des burgers qui tiennent la route.</p>
-      <div class="story-sig">
-        <strong>Oussama &amp; l'équipe</strong>
-        <span>αlpha · Resto à la Parisienne</span>
-      </div>
+    <div id="fullMenuWrap" style="display:none">
+      <div class="cat-tabs" id="catTabs"></div>
+      <div class="menu-grid" id="menuGrid"></div>
     </div>
   </div>
 </section>
@@ -1136,12 +1207,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
     <div class="footer-inner">
       <div>
         <div class="brand">
-          <div class="brand-stack">
-            <div class="brand-wm">
-              <span class="a">α</span><span class="rest">lpha</span>
-            </div>
-            <span class="brand-sub">Resto à la Parisienne</span>
-          </div>
+          <img src="https://hbkpkpvqsykjnmoyxkdg.supabase.co/storage/v1/object/public/logos/alpharesto/logo.png?v=2" alt="αlpha" style="height:48px;width:auto;object-fit:contain;display:block;" />
         </div>
         <p class="baseline">Spécialités tunisiennes maison, kebabs, pizzas et burgers — au 181 rue Colbert depuis 2018.</p>
       </div>
@@ -1316,154 +1382,154 @@ nav.primary a:hover::after{transform:scaleX(1)}
 
 <script>
 /* ============================================================
-   DATA
+   API & MENU DATA
 ============================================================ */
-const SAUCES = ['Blanche maison','Samouraï','Algérienne','Harissa douce','Biggy','Andalouse','Mayo','Ketchup','BBQ','Curry'];
-const VIANDES = ['Poulet','Bœuf','Mixte'];
+const API = 'https://www.burstflow.fr';
+const SLUG = 'alpharesto';
 
-const DISHES = [
-  {
-    id:'mak-p', cat:'tunisien', name:'Makloub poulet', price:9.5,
-    desc:"Notre signature tunisienne : pain plat msemmen grillé à la plancha, poulet mariné aux épices maison, salade fraîche, tomate, oignon, sauce blanche.",
-    img:'https://images.unsplash.com/photo-1633321702518-7feccafb94d5?auto=format&fit=crop&w=900&q=80',
-    tag:'Signature', meta:'15 min',
-    allergens:['Gluten','Lactose','Œuf','Sésame'],
-    options:[
-      {label:'Viande', req:true, type:'single', choices:[{v:'Poulet'},{v:'Bœuf'},{v:'Mixte',extra:1}], def:'Poulet'},
-      {label:'Sauce', req:true, type:'single', choices:SAUCES.map(s=>({v:s})), def:'Blanche maison'},
-      {label:'Crudités', req:false, type:'multi', choices:[{v:'Salade'},{v:'Tomate'},{v:'Oignon'},{v:'Cornichon'}], def:['Salade','Tomate','Oignon']},
-    ]
-  },
-  {
-    id:'fri', cat:'tunisien', name:'Fricassé tunisien', price:4.5,
-    desc:"Un classique tunisien : petit pain frit moelleux, thon, œuf dur, olives noires, harissa douce, citron confit, persil.",
-    img:'https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80',
-    meta:'8 min',
-    allergens:['Gluten','Œuf','Poisson','Sulfites'],
-    options:[
-      {label:'Niveau d\'harissa', req:false, type:'single', choices:[{v:'Sans'},{v:'Douce'},{v:'Moyenne'},{v:'Forte'}], def:'Douce'},
-    ]
-  },
-  {
-    id:'lab', cat:'tunisien', name:'Lablebi', price:8.0,
-    desc:"La soupe de pois chiches tunisienne de comptoir : bouillon parfumé au cumin, harissa, ail, œuf coulant, croûtons, huile d'olive, citron.",
-    img:'https://images.unsplash.com/photo-1547573854-74d2a71d0826?auto=format&fit=crop&w=900&q=80',
-    meta:'10 min',
-    allergens:['Gluten','Œuf','Sulfites'],
-    options:[
-      {label:'Niveau d\'harissa', req:false, type:'single', choices:[{v:'Sans'},{v:'Douce'},{v:'Moyenne'},{v:'Forte'}], def:'Douce'},
-      {label:'Avec œuf', req:false, type:'single', choices:[{v:'Oui'},{v:'Sans œuf'}], def:'Oui'},
-    ]
-  },
-  {
-    id:'kaf', cat:'tunisien', name:'Kafteji poulet', price:9.0,
-    desc:"Mélange tunisien chaleureux : poivrons, courgettes, aubergines et tomates grillés au feu, œufs brouillés, poulet, harissa douce.",
-    img:'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?auto=format&fit=crop&w=900&q=80',
-    meta:'15 min',
-    allergens:['Œuf','Sulfites'],
-    options:[
-      {label:'Viande', req:true, type:'single', choices:[{v:'Poulet'},{v:'Bœuf'},{v:'Thon'},{v:'Veggie',extra:-1}], def:'Poulet'},
-      {label:'Niveau d\'harissa', req:false, type:'single', choices:[{v:'Sans'},{v:'Douce'},{v:'Moyenne'},{v:'Forte'}], def:'Douce'},
-    ]
-  },
-  {
-    id:'keb-p', cat:'kebab', name:'Kebab poulet maison', price:7.5,
-    desc:"Pain frais du jour, poulet mariné taillé à la broche, crudités, frites en supplément, sauce au choix.",
-    img:'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=80',
-    meta:'10 min',
-    allergens:['Gluten','Lactose','Œuf','Sésame','Moutarde'],
-    options:[
-      {label:'Viande', req:true, type:'single', choices:VIANDES.map(v=>({v})), def:'Poulet'},
-      {label:'Sauces (jusqu\'à 2)', req:true, type:'multi', max:2, choices:SAUCES.map(s=>({v:s})), def:['Blanche maison']},
-      {label:'Frites incluses ?', req:false, type:'single', choices:[{v:'Oui',extra:1.5},{v:'Sans frites'}], def:'Sans frites'},
-    ]
-  },
-  {
-    id:'keb-m', cat:'kebab', name:'Kebab mixte XL', price:9.5,
-    desc:"Bœuf et poulet à la broche, double pain, double viande, double sauce — pour les grosses faims.",
-    img:'https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=900&q=80',
-    tag:'XL', meta:'12 min',
-    allergens:['Gluten','Lactose','Œuf','Sésame','Moutarde'],
-    options:[
-      {label:'Sauces (jusqu\'à 2)', req:true, type:'multi', max:2, choices:SAUCES.map(s=>({v:s})), def:['Blanche maison','Samouraï']},
-      {label:'Frites incluses ?', req:false, type:'single', choices:[{v:'Oui',extra:1.5},{v:'Sans frites'}], def:'Sans frites'},
-    ]
-  },
-  {
-    id:'tac-m', cat:'tacos', name:'Tacos — M', price:6.3,
-    desc:"Tortilla grillée, viande au choix, frites maison, sauce fromagère, sauce au choix. Servi avec une boisson au choix.",
-    img:'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=900&q=80',
-    meta:'10 min',
-    allergens:['Gluten','Lactose','Œuf','Moutarde'],
-    options:[
-      {label:'Taille', req:true, type:'single', choices:[{v:'M (1 viande)'},{v:'L (2 viandes)',extra:2},{v:'XL (3 viandes)',extra:4}], def:'M (1 viande)'},
-      {label:'Viandes', req:true, type:'multi', max:3, choices:[{v:'Poulet'},{v:'Tenders'},{v:'Cordon bleu'},{v:'Bœuf haché'},{v:'Merguez'}], def:['Poulet']},
-      {label:'Sauces (jusqu\'à 2)', req:true, type:'multi', max:2, choices:SAUCES.map(s=>({v:s})), def:['Blanche maison']},
-    ]
-  },
-  {
-    id:'bur-c', cat:'tacos', name:'Burger Colbert', price:10.5,
-    desc:"Bun maison toasté, steak haché 150 g, cheddar fondu, oignons confits, cornichon, sauce αlpha maison.",
-    img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80',
-    tag:'Signature', meta:'12 min',
-    allergens:['Gluten','Lactose','Œuf','Sésame','Moutarde'],
-    options:[
-      {label:'Cuisson du steak', req:true, type:'single', choices:[{v:'Saignant'},{v:'À point'},{v:'Bien cuit'}], def:'À point'},
-      {label:'Suppléments', req:false, type:'multi', choices:[{v:'Bacon',extra:1.5},{v:'Œuf',extra:1},{v:'Double steak',extra:3}], def:[]},
-      {label:'Frites incluses', req:false, type:'single', choices:[{v:'Oui',extra:2},{v:'Sans'}], def:'Sans'},
-    ]
-  },
-  {
-    id:'piz-4', cat:'pizza', name:'Pizza 4 fromages', price:11.0, priceMax:14.0,
-    desc:"Mozzarella, gorgonzola, chèvre, parmesan sur base crème fraîche. Pâte fine maison.",
-    img:'https://images.unsplash.com/photo-1593504049359-74330189a345?auto=format&fit=crop&w=900&q=80',
-    tag:'Offre 2 pizzas', meta:'14 min',
-    offerNote:"Offre 2 pizzas comprises au choix",
-    allergens:['Gluten','Lactose','Œuf'],
-    options:[
-      {label:'Taille', req:true, type:'size', choices:[
-        {v:'L', subtitle:'2 pizzas L · 4 parts', price:11.0},
-        {v:'XL', subtitle:'2 pizzas XL · 6 parts', price:14.0},
-      ], def:'L'},
-      {label:'2e pizza au choix', req:true, type:'single', choices:[{v:'4 fromages'},{v:'Margherita'},{v:'Reine'},{v:'Buffalo'},{v:'Tartiflette'}], def:'4 fromages'},
-    ]
-  },
-  {
-    id:'piz-b', cat:'pizza', name:'Pizza Buffalo', price:13.5, priceMax:16.5,
-    desc:"Mozzarella di bufala, tomates cerises confites, basilic frais, huile parfumée à l'origan. Pâte fine maison.",
-    img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80',
-    tag:'Offre 2 pizzas', meta:'15 min',
-    offerNote:"Offre 2 pizzas comprises au choix",
-    allergens:['Gluten','Lactose','Œuf'],
-    options:[
-      {label:'Taille', req:true, type:'size', choices:[
-        {v:'L', subtitle:'2 pizzas L · 4 parts', price:13.5},
-        {v:'XL', subtitle:'2 pizzas XL · 6 parts', price:16.5},
-      ], def:'L'},
-      {label:'2e pizza au choix', req:true, type:'single', choices:[{v:'Buffalo'},{v:'Margherita'},{v:'Reine'},{v:'4 fromages'},{v:'Tartiflette'}], def:'Buffalo'},
-    ]
-  },
-  {
-    id:'pat-g', cat:'pates', name:'Pâtes gratinées 3 fromages', price:11.5,
-    desc:"Penne crémeuses, jambon, mozzarella, emmental, parmesan, gratinées au four.",
-    img:'https://images.unsplash.com/photo-1621996346565-e3dbc6d4dc6f?auto=format&fit=crop&w=900&q=80',
-    meta:'15 min',
-    allergens:['Gluten','Lactose','Œuf'],
-    options:[
-      {label:'Viande', req:false, type:'single', choices:[{v:'Jambon'},{v:'Poulet'},{v:'Bœuf haché',extra:1},{v:'Veggie'}], def:'Jambon'},
-    ]
-  },
-  {
-    id:'sal-c', cat:'pates', name:'Salade César revisitée', price:9.0,
-    desc:"Sucrine croquante, poulet grillé, copeaux de parmesan, croûtons maison, sauce César légère, citron.",
-    img:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80',
-    tag:'Veggie', meta:'8 min',
-    allergens:['Gluten','Lactose','Œuf','Moutarde','Poisson'],
-    options:[
-      {label:'Protéine', req:false, type:'single', choices:[{v:'Poulet'},{v:'Sans viande'},{v:'Œuf dur extra',extra:1}], def:'Poulet'},
-    ]
-  },
+let RESTAURANT_INFO = null;
+let MENU_DATA = [];   // [{id, nom, articles:[...]}]
+let DISHES_FLAT = []; // articles mapped to local format
+
+const CAT_IMG_MAP = [
+  [/kebab|wrap|tacos/i,             'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=75'],
+  [/sandwich/i,                     'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=75'],
+  [/pizza/i,                        'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=75'],
+  [/boisson|drink|soda|jus|eau/i,   'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=600&q=75'],
+  [/dessert|gâteau|glace/i,         'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=75'],
+  [/pâtes|pasta|riz|gratin/i,       'https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=600&q=75'],
+  [/salade/i,                       'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=75'],
+  [/tunisien|makloub|fricassé|kafteji|lablebi/i, 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=75'],
+  [/viande|poulet|bœuf|kebab/i,     'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&q=75'],
 ];
+const DEFAULT_DISH_IMG = 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=600&q=75';
+
+function getCatImg(nom) {
+  for (const [re, url] of CAT_IMG_MAP) if (re.test(nom)) return url;
+  return DEFAULT_DISH_IMG;
+}
+
+function toLocalDish(article, catId, catNom) {
+  const opts = (article.options || []).map(o => ({
+    label: o.nom || '',
+    req: !!o.required,
+    type: o.type === 'multi' ? 'multi' : 'single',
+    choices: (o.choix || []).map(c => ({ v: c })),
+    max: o.max || 99,
+    def: o.type === 'multi' ? [] : ((o.choix || [])[0] || null),
+  }));
+  return {
+    id: article.id,
+    cat: catId,
+    catNom,
+    name: article.nom,
+    price: article.prix || 0,
+    desc: article.description || '',
+    img: article.image_url || getCatImg(catNom),
+    allergens: article.allergenes ? article.allergenes.split(',').map(s => s.trim()) : [],
+    options: opts,
+    meta: null,
+    tag: null,
+    priceMax: undefined,
+    offerNote: null,
+  };
+}
+
+async function loadRestaurant() {
+  try {
+    const [restoRes, carteRes] = await Promise.all([
+      fetch(`${API}/api/public/restaurant/${SLUG}`),
+      fetch(`${API}/api/public/restaurant/${SLUG}/carte`),
+    ]);
+    RESTAURANT_INFO = await restoRes.json();
+    const { carte } = await carteRes.json();
+    MENU_DATA = carte || [];
+    DISHES_FLAT = MENU_DATA.flatMap(cat =>
+      (cat.articles || []).map(a => toLocalDish(a, cat.id, cat.nom))
+    );
+    renderFeatured();
+  } catch(e) {
+    const el = document.getElementById('menuLoading');
+    if (el) el.textContent = 'Carte temporairement indisponible — appelez le 09 81 16 68 43.';
+  }
+}
+loadRestaurant();
+
+/* ============================================================
+   MENU RENDERING
+============================================================ */
+function dishCardHTML(d) {
+  const price = d.price
+    ? `<span class="price">${Math.floor(d.price)}<small>,${((d.price % 1) * 100).toFixed(0).padStart(2,'0')}€</small></span>`
+    : '';
+  const desc = d.desc ? `<p>${d.desc.split('.')[0]}.</p>` : '';
+  return `
+    <article class="dish" data-id="${d.id}" onclick="openDish('${d.id}')">
+      <div class="dish-img">
+        <div class="dish-img-inner">
+          <img src="${d.img}" alt="${d.name}" loading="lazy"/>
+        </div>
+      </div>
+      <div class="dish-body">
+        <div class="dish-row">
+          <h3>${d.name}</h3>
+          ${price}
+        </div>
+        ${desc}
+        <div class="dish-foot">
+          <span class="dish-meta">${d.catNom || ''}</span>
+          <button class="add" onclick="event.stopPropagation();openDish('${d.id}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            Choisir
+          </button>
+        </div>
+      </div>
+    </article>`;
+}
+
+function renderFeatured() {
+  document.getElementById('menuLoading').style.display = 'none';
+  const grid = document.getElementById('featuredGrid');
+  grid.style.display = 'grid';
+
+  // Prefer dishes with real (non-fallback) images
+  const withReal = DISHES_FLAT.filter(d => d.img && !d.img.includes('unsplash.com/photo-1476224203421'));
+  const featured = withReal.length >= 4 ? withReal.slice(0, 6) : DISHES_FLAT.slice(0, 6);
+
+  grid.innerHTML = featured.map(dishCardHTML).join('');
+
+  if (DISHES_FLAT.length > 6) {
+    const wrap = document.getElementById('seeAllWrap');
+    wrap.style.display = 'block';
+    document.getElementById('seeAllBtn').textContent = `Voir tout le menu · ${DISHES_FLAT.length} plats →`;
+  }
+}
+
+function showFullMenu() {
+  document.getElementById('seeAllWrap').style.display = 'none';
+  const wrap = document.getElementById('fullMenuWrap');
+  wrap.style.display = 'block';
+
+  const total = DISHES_FLAT.length;
+  document.getElementById('catTabs').innerHTML =
+    `<button class="cat-tab is-active" data-cat="all" onclick="filterMenu('all')">Tout <span class="c">${total}</span></button>` +
+    MENU_DATA.map(cat =>
+      `<button class="cat-tab" data-cat="${cat.id}" onclick="filterMenu('${cat.id}')">${cat.nom} <span class="c">${(cat.articles||[]).length}</span></button>`
+    ).join('');
+
+  filterMenu('all');
+  setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+function filterMenu(catId) {
+  document.querySelectorAll('#catTabs .cat-tab').forEach(t =>
+    t.classList.toggle('is-active', t.dataset.cat === catId)
+  );
+  const dishes = catId === 'all' ? DISHES_FLAT : DISHES_FLAT.filter(d => d.cat === catId);
+  document.getElementById('menuGrid').innerHTML = dishes.map(dishCardHTML).join('');
+}
+
+// DISHES_FLAT is populated by loadRestaurant() from Supabase API
 
 /* ============================================================
    REVIEWS DATA
@@ -1493,59 +1559,13 @@ let currentOpts = {};
 let currentQty = 1;
 let currentSize = null;
 
-/* ============================================================
-   MENU rendering
-============================================================ */
-function renderMenu(cat){
-  const grid = document.getElementById('menuGrid');
-  const items = cat === 'all' ? DISHES : DISHES.filter(d => d.cat === cat);
-  grid.innerHTML = items.map(d => {
-    const isPizza = d.priceMax !== undefined;
-    const priceHTML = isPizza
-      ? `<span class="price"><span class="from">DÈS</span>${Math.floor(d.price)}<small>,${(d.price%1*100).toFixed(0).padStart(2,'0')}€</small></span>`
-      : `<span class="price">${Math.floor(d.price)}<small>,${(d.price%1*100).toFixed(0).padStart(2,'0')}€</small></span>`;
-    return `
-      <article class="dish" data-id="${d.id}" onclick="openDish('${d.id}')">
-        <div class="dish-img">
-          ${d.tag ? `<span class="dish-badge ${d.tag==='Veggie'?'veggie':(d.tag==='XL'?'xl':(d.tag.startsWith('Offre')?'offer':'signature'))}">${d.tag}</span>` : ''}
-          <div class="dish-img-inner">
-            <img src="${d.img}" alt="${d.name}" loading="lazy"/>
-          </div>
-        </div>
-        <div class="dish-body">
-          <div class="dish-row">
-            <h3>${d.name}</h3>
-            ${priceHTML}
-          </div>
-          <p>${d.desc.split('.')[0]}.</p>
-          ${d.offerNote ? `<span class="offer-note">${d.offerNote}</span>` : ''}
-          <div class="dish-foot">
-            <span class="dish-meta">${d.meta||''}</span>
-            <button class="add" onclick="event.stopPropagation();openDish('${d.id}')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-              Choisir
-            </button>
-          </div>
-        </div>
-      </article>
-    `;
-  }).join('');
-}
-renderMenu('all');
-
-document.querySelectorAll('.cat-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('is-active'));
-    btn.classList.add('is-active');
-    renderMenu(btn.dataset.cat);
-  });
-});
+// Menu is rendered by renderFeatured() / showFullMenu() / filterMenu() via loadRestaurant()
 
 /* ============================================================
    DISH MODAL
 ============================================================ */
 function openDish(id){
-  const d = DISHES.find(x => x.id === id);
+  const d = DISHES_FLAT.find(x => x.id === id);
   if(!d) return;
   currentDish = d;
   currentOpts = {};
@@ -1815,11 +1835,7 @@ function renderCartList(){
    DRAWER
 ============================================================ */
 function openDrawer(skipAuto){
-  if(!skipAuto && cart.length === 0){
-    // demo helper: add 2 default items if empty
-    cart.push({id:'demo1',dishId:'mak-p',name:'Makloub poulet',img:DISHES[0].img,price:9.5,qty:1,opts:'Viande: Poulet · Sauce: Blanche maison'});
-    cart.push({id:'demo2',dishId:'tac-m',name:'Tacos — M',img:DISHES[6].img,price:6.3,qty:1,opts:'Taille: M · Viandes: Poulet · Sauces: Blanche maison'});
-  }
+  void skipAuto;
   refreshCart();
   document.getElementById('drawer').classList.add('is-open');
   document.getElementById('drawerBg').classList.add('is-open');
@@ -1869,7 +1885,67 @@ function goToStep(n){
 function nextStep(){
   if(currentStep===1){ if(cart.length===0) return; goToStep(2); }
   else if(currentStep===2){ if(!selectedSlot) return; goToStep(3); }
-  else if(currentStep===3){ goToStep(4); }
+  else if(currentStep===3){ submitOrder(); }
+}
+
+function resolvePickupTime(val) {
+  const now = new Date();
+  if (val.startsWith('now')) {
+    const mins = parseInt(val.replace('now',''));
+    now.setMinutes(now.getMinutes() + mins);
+    return now.toISOString();
+  }
+  if (val.startsWith('later_')) {
+    const totalMin = parseInt(val.replace('later_',''));
+    now.setHours(Math.floor(totalMin/60), totalMin%60, 0, 0);
+    return now.toISOString();
+  }
+  return null;
+}
+
+async function submitOrder() {
+  const name = document.getElementById('cName').value.trim();
+  const phone = document.getElementById('cPhone').value.trim();
+  const note = document.getElementById('cNote').value.trim();
+  if (!name) { document.getElementById('cName').focus(); return; }
+
+  const btn = document.getElementById('nextBtn');
+  const origHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours…';
+
+  const items = cart.map(i => ({
+    id: i.dishId, nom: i.name, prix: i.price, quantite: i.qty,
+    ...(i.opts ? { note: i.opts } : {}),
+  }));
+
+  try {
+    const res = await fetch(`${API}/api/public/order`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        slug: SLUG,
+        customer_name: name,
+        customer_phone: phone || null,
+        notes: note || null,
+        type: 'à emporter',
+        pickup_time: selectedSlot ? resolvePickupTime(selectedSlot.val) : null,
+        total: cartSubtotal(),
+        items,
+      }),
+    });
+    if (res.ok) {
+      goToStep(4);
+    } else {
+      btn.disabled = false;
+      btn.innerHTML = origHTML;
+      alert('Une erreur est survenue. Réessayez ou appelez le 09 81 16 68 43.');
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.innerHTML = origHTML;
+    alert('Erreur de connexion. Vérifiez votre réseau et réessayez.');
+  }
 }
 
 function setSlotMode(m){
@@ -1881,25 +1957,83 @@ function setSlotMode(m){
   renderSlots();
 }
 
+function minToLabel(m) {
+  return Math.floor(m/60).toString().padStart(2,'0') + 'h' + (m%60).toString().padStart(2,'0');
+}
+function plusMinutes(m){
+  const d = new Date(); d.setMinutes(d.getMinutes()+m);
+  return d.getHours().toString().padStart(2,'0')+'h'+d.getMinutes().toString().padStart(2,'0');
+}
+function isInService(totalMin, svc) {
+  if (!svc) return false;
+  const [sh,sm] = svc.start.split(':').map(Number);
+  const [eh,em] = svc.end.split(':').map(Number);
+  return totalMin >= sh*60+sm && totalMin <= eh*60+em;
+}
+function isOpenNow() {
+  const info = RESTAURANT_INFO;
+  if (!info?.horaires) return true; // assume open if no info
+  const day = new Date().getDay();
+  const sched = info.horaires[day];
+  if (!sched?.open) return false;
+  const now = new Date();
+  const nowMin = now.getHours()*60 + now.getMinutes();
+  return isInService(nowMin, sched.lunch) || isInService(nowMin, sched.dinner);
+}
+function getLaterSlots() {
+  const info = RESTAURANT_INFO;
+  const slots = [];
+  const now = new Date();
+  const nowMin = now.getHours()*60 + now.getMinutes() + 20;
+  const services = [];
+  if (info?.horaires) {
+    const day = now.getDay();
+    const sched = info.horaires[day];
+    if (sched?.open) {
+      if (sched.lunch) services.push(sched.lunch);
+      if (sched.dinner) services.push(sched.dinner);
+    }
+  } else {
+    // fallback: assume 11h-15h and 18h-23h
+    services.push({start:'11:00',end:'15:00'},{start:'18:00',end:'23:00'});
+  }
+  for (const svc of services) {
+    const [sh,sm] = svc.start.split(':').map(Number);
+    const [eh,em] = svc.end.split(':').map(Number);
+    const startMin = sh*60+sm;
+    const endMin = eh*60+em - 15;
+    let t = Math.max(startMin, Math.ceil(nowMin/15)*15);
+    while (t <= endMin && slots.length < 8) {
+      const label = minToLabel(t);
+      slots.push({time: label, sub: 'Prêt à ' + label, busy: false, val: 'later_' + t});
+      t += 15;
+    }
+  }
+  return slots;
+}
 function renderSlots(){
   const c = document.getElementById('slotsContainer');
   let slots = [];
   if(slotMode==='now'){
+    if (!isOpenNow()) {
+      c.innerHTML = `<div class="slot-info" style="color:var(--red);font-weight:600">Le restaurant est actuellement fermé.<br>Choisissez un créneau ou revenez lors des horaires d'ouverture.</div>`;
+      setSlotMode('later');
+      return;
+    }
     slots = [
       {time:'+15 min', sub:'Prêt vers ' + plusMinutes(15), busy:false, val:'now15'},
-      {time:'+25 min', sub:'Plus tranquille', busy:false, val:'now25'},
-      {time:'+40 min', sub:'Service tranquille', busy:false, val:'now40'},
+      {time:'+25 min', sub:'Service normal', busy:false, val:'now25'},
+      {time:'+40 min', sub:'Moins de rush', busy:false, val:'now40'},
     ];
   } else {
-    const opens = '18h00';
-    slots = [];
-    for(let i=0;i<6;i++){
-      const t = addMinutesToSlot(opens, i*15);
-      slots.push({time:t, sub:'Prêt à '+t, busy:(i===2), val:'later'+i});
+    slots = getLaterSlots();
+    if (slots.length === 0) {
+      c.innerHTML = `<div class="slot-info">Aucun créneau disponible ce soir. Revenez lors des prochains horaires d'ouverture.</div>`;
+      return;
     }
   }
   c.innerHTML = `<div class="slots">${slots.map(s=>`
-    <button class="slot ${s.busy?'busy':''} ${selectedSlot && selectedSlot.val===s.val?'is-selected':''}" ${s.busy?'disabled':''} onclick="selectSlot('${s.val}','${s.time}')">
+    <button class="slot ${s.busy?'busy':''} ${selectedSlot&&selectedSlot.val===s.val?'is-selected':''}" ${s.busy?'disabled':''} onclick="selectSlot('${s.val}','${s.time}')">
       <strong>${s.time}</strong><small>${s.sub}</small>
     </button>
   `).join('')}</div>`;
@@ -1908,15 +2042,6 @@ function selectSlot(val, label){
   selectedSlot = {val,label};
   renderSlots();
   document.getElementById('nextBtn').disabled = false;
-}
-function plusMinutes(m){
-  const d = new Date(); d.setMinutes(d.getMinutes()+m);
-  return d.getHours().toString().padStart(2,'0')+'h'+d.getMinutes().toString().padStart(2,'0');
-}
-function addMinutesToSlot(s, m){
-  const [h,mn] = s.split('h').map(x=>parseInt(x));
-  let total = h*60+mn+m;
-  return Math.floor(total/60).toString().padStart(2,'0')+'h'+(total%60).toString().padStart(2,'0');
 }
 
 function fillTicket(){
