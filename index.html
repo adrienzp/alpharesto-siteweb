@@ -1929,6 +1929,7 @@ async function submitOrder() {
         customer_phone: phone || null,
         notes: note || null,
         type: 'à emporter',
+        source: 'website',
         pickup_time: selectedSlot ? resolvePickupTime(selectedSlot.val) : null,
         total: cartSubtotal(),
         items,
