@@ -1397,6 +1397,9 @@ const SLUG = 'alpharesto';
 let RESTAURANT_INFO = null;
 let MENU_DATA = [];   // [{id, nom, articles:[...]}]
 let DISHES_FLAT = []; // articles mapped to local format
+let SLOT_COUNTS = {};
+const MAX_PER_SLOT = 5;
+const BUCKET_MS = 15 * 60 * 1000;
 
 const CAT_IMG_MAP = [
   [/kebab|wrap|tacos/i,             'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=75'],
@@ -1461,6 +1464,26 @@ async function loadRestaurant() {
   }
 }
 loadRestaurant();
+
+async function loadSlotCounts() {
+  try {
+    const r = await fetch(`${API}/api/public/restaurant/${SLUG}/slots`);
+    const { buckets } = await r.json();
+    SLOT_COUNTS = buckets || {};
+  } catch(e) { SLOT_COUNTS = {}; }
+}
+
+function getBucket(isoString) {
+  const t = new Date(isoString).getTime();
+  return Math.floor(t / BUCKET_MS) * BUCKET_MS;
+}
+
+function isSlotFull(val) {
+  const iso = resolvePickupTime(val);
+  if (!iso) return false;
+  const bucket = getBucket(iso);
+  return (SLOT_COUNTS[bucket] ?? 0) >= MAX_PER_SLOT;
+}
 
 /* ============================================================
    MENU RENDERING
@@ -1896,7 +1919,7 @@ function goToStep(n){
 }
 
 function nextStep(){
-  if(currentStep===1){ if(cart.length===0) return; goToStep(2); }
+  if(currentStep===1){ if(cart.length===0) return; loadSlotCounts().then(()=>goToStep(2)); }
   else if(currentStep===2){ if(!selectedSlot) return; goToStep(3); }
   else if(currentStep===3){ submitOrder(); }
 }
@@ -2021,7 +2044,8 @@ function getLaterSlots() {
     let t = Math.max(startMin, Math.ceil(nowMin/15)*15);
     while (t <= endMin && slots.length < 8) {
       const label = minToLabel(t);
-      slots.push({time: label, sub: 'Prêt à ' + label, busy: false, val: 'later_' + t});
+      const full  = isSlotFull('later_' + t);
+      slots.push({time: label, sub: full ? 'Créneau complet' : 'Prêt à ' + label, busy: full, val: 'later_' + t});
       t += 15;
     }
   }
@@ -2037,9 +2061,9 @@ function renderSlots(){
       return;
     }
     slots = [
-      {time:'+15 min', sub:'Prêt vers ' + plusMinutes(15), busy:false, val:'now15'},
-      {time:'+25 min', sub:'Service normal', busy:false, val:'now25'},
-      {time:'+40 min', sub:'Moins de rush', busy:false, val:'now40'},
+      {time:'+15 min', sub: isSlotFull('now15') ? 'Créneau complet' : 'Prêt vers ' + plusMinutes(15), busy: isSlotFull('now15'), val:'now15'},
+      {time:'+25 min', sub: isSlotFull('now25') ? 'Créneau complet' : 'Service normal',                busy: isSlotFull('now25'), val:'now25'},
+      {time:'+40 min', sub: isSlotFull('now40') ? 'Créneau complet' : 'Moins de rush',                busy: isSlotFull('now40'), val:'now40'},
     ];
   } else {
     slots = getLaterSlots();
