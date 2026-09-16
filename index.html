@@ -1974,6 +1974,8 @@ async function submitOrder() {
     if (res.ok) {
       const json = await res.json();
       orderId = json.id || null;
+      cart.splice(0, cart.length);
+      refreshCart();
       goToStep(4);
     } else {
       btn.disabled = false;
@@ -2114,6 +2116,15 @@ function startOrderPolling() {
         el.style.borderColor = cfg.color + '55';
         el.style.color = cfg.color;
         el.style.background = cfg.color + '15';
+      }
+      if (statut === 'en préparation') {
+        clearInterval(orderPollInterval);
+        orderPollInterval = null;
+        setTimeout(() => {
+          if (document.getElementById('drawer').classList.contains('is-open')) {
+            closeDrawer();
+          }
+        }, 2500);
       }
       if (statut === 'prêt' || statut === 'annulé') {
         clearInterval(orderPollInterval);
