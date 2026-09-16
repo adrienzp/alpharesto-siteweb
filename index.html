@@ -1358,13 +1358,14 @@ nav.primary a:hover::after{transform:scaleX(1)}
         <div id="orderStatus" style="display:none;align-items:center;justify-content:center;gap:10px;padding:10px 20px;border-radius:999px;border:1.5px solid #e4e4e7;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:14px auto 4px;transition:all .4s ease;max-width:280px"></div>
         <p>L'équipe valide votre commande dans la minute. Vous allez recevoir un SMS de confirmation.</p>
         <div class="ticket" id="ticket">
+          <div id="orderItems"></div>
           <div class="row code"><span>Code retrait</span><span id="orderCode">ALP-7321</span></div>
           <div class="row"><span>À retirer à</span><span id="orderTime">19h15</span></div>
           <div class="row"><span>Au nom de</span><span id="orderName">Camille</span></div>
           <div class="row"><span>Adresse</span><span>181 rue Colbert, Lille</span></div>
           <div class="row"><span>Total à régler sur place</span><span id="orderTotal">15,80 €</span></div>
         </div>
-        <a href="#" onclick="closeDrawer();return false" class="btn-ghost" style="display:inline-flex">Retour à la carte</a>
+        <a href="#" onclick="closeDrawer();return false" class="btn-ghost" style="display:inline-flex">Commander à nouveau</a>
       </div>
     </div>
   </div>
@@ -1574,6 +1575,7 @@ const REVIEWS = [
 ];
 
 const cart = [];
+let lastOrder = [];
 let currentStep = 1;
 let slotMode = 'now';
 let selectedSlot = null;
@@ -1908,6 +1910,7 @@ function goToStep(n){
   } else if(n===4){
     foot.style.display='none';
     fillTicket();
+    fillOrderedItems();
     startOrderPolling();
   }
 }
@@ -1968,6 +1971,9 @@ async function submitOrder() {
     if (res.ok) {
       const json = await res.json();
       orderId = json.id || null;
+      lastOrder = cart.map(i => ({...i}));
+      cart.splice(0, cart.length);
+      refreshCart();
       goToStep(4);
     } else {
       btn.disabled = false;
@@ -2080,10 +2086,19 @@ function selectSlot(val, label){
 
 function fillTicket(){
   const name = document.getElementById('cName').value.trim() || 'Camille';
+  const total = lastOrder.reduce((s,i) => s + i.price * i.qty, 0);
   document.getElementById('orderName').textContent = name;
   document.getElementById('orderTime').textContent = selectedSlot ? selectedSlot.label : '19h15';
-  document.getElementById('orderTotal').textContent = cartSubtotal().toFixed(2).replace('.',',')+' €';
+  document.getElementById('orderTotal').textContent = total.toFixed(2).replace('.',',')+' €';
   document.getElementById('orderCode').textContent = orderId ? 'ALP-' + orderId.slice(-4).toUpperCase() : 'ALP-' + Math.floor(7000+Math.random()*999);
+}
+
+function fillOrderedItems(){
+  const el = document.getElementById('orderItems');
+  if (!el || !lastOrder.length) return;
+  el.innerHTML = lastOrder.map(i =>
+    `<div class="row"><span>${i.qty}× ${i.name}</span><span>${(i.price * i.qty).toFixed(2).replace('.',',')} €</span></div>`
+  ).join('');
 }
 
 function startOrderPolling() {
@@ -2108,6 +2123,15 @@ function startOrderPolling() {
         el.style.borderColor = cfg.color + '55';
         el.style.color = cfg.color;
         el.style.background = cfg.color + '15';
+      }
+      if (statut === 'en préparation') {
+        clearInterval(orderPollInterval);
+        orderPollInterval = null;
+        setTimeout(() => {
+          if (document.getElementById('drawer').classList.contains('is-open')) {
+            closeDrawer();
+          }
+        }, 2500);
       }
       if (statut === 'prêt' || statut === 'annulé') {
         clearInterval(orderPollInterval);
