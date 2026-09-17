@@ -549,6 +549,22 @@ nav.primary a:hover::after{transform:scaleX(1)}
 .find .map iframe{width:100%;height:100%;border:0;filter:saturate(.85) contrast(1.02)}
 
 /* ============================================================
+   QR SECTION
+============================================================ */
+.qr-section{padding:120px 0;background:var(--cream-2);position:relative;overflow:hidden}
+.qr-section::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(232,88,10,.12) 0%,transparent 65%);pointer-events:none}
+.qr-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative}
+.qr-text h2{font-family:var(--font-display);font-size:clamp(44px,6vw,82px);line-height:.92;margin:14px 0 24px;text-transform:uppercase}
+.qr-text h2 em{color:var(--gold-bright);font-style:normal}
+.qr-text p{color:var(--ink-3);line-height:1.7;margin:0 0 32px;max-width:42ch;font-size:16px}
+.qr-card{display:flex;justify-content:center;align-items:center}
+.qr-frame{background:var(--gold);border-radius:var(--r-lg);padding:28px 28px 20px;text-align:center;box-shadow:0 0 80px rgba(250,210,106,.18),0 20px 60px rgba(0,0,0,.4)}
+.qr-frame #qrcode{border-radius:8px;overflow:hidden;display:block}
+.qr-frame #qrcode canvas,.qr-frame #qrcode img{display:block}
+.qr-url{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--sand);margin-top:14px;font-weight:700}
+@media (max-width:900px){.qr-inner{grid-template-columns:1fr;text-align:center}.qr-text p{margin-left:auto;margin-right:auto}.qr-card{margin-top:10px}}
+
+/* ============================================================
    FOOTER
 ============================================================ */
 .footer{padding:70px 0 40px;background:var(--cream);color:var(--ink)}
@@ -1261,6 +1277,29 @@ nav.primary a:hover::after{transform:scaleX(1)}
   </div>
 </section>
 
+<!-- QR CODE -->
+<section class="qr-section">
+  <div class="container">
+    <div class="qr-inner">
+      <div class="qr-text">
+        <span class="eyebrow">Commander en ligne</span>
+        <h2>SCANNEZ<br><em>&amp; commandez</em></h2>
+        <p>Accédez directement à notre carte, choisissez vos plats et votre créneau de retrait. Prêt en quelques minutes.</p>
+        <button class="btn-primary" onclick="openDrawer()">
+          Commander maintenant
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="qr-card">
+        <div class="qr-frame">
+          <div id="qrcode"></div>
+          <p class="qr-url">burstflow.fr/menu/alpharesto</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="container">
@@ -1444,6 +1483,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
   </div>
 </aside>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 /* ============================================================
    API & MENU DATA
@@ -2287,6 +2327,18 @@ document.addEventListener('keydown', e => {
   if(e.key==='Escape'){
     if(document.getElementById('dmodal').classList.contains('is-open')) closeDish();
     else if(document.getElementById('drawer').classList.contains('is-open')) closeDrawer();
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  if(typeof QRCode !== 'undefined'){
+    new QRCode(document.getElementById('qrcode'), {
+      text: 'https://www.burstflow.fr/menu/alpharesto',
+      width: 220, height: 220,
+      colorDark: '#0E0B08',
+      colorLight: '#FAD26A',
+      correctLevel: QRCode.CorrectLevel.M
+    });
   }
 });
 </script>
