@@ -760,6 +760,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
 .slot small{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
 .slot.busy{opacity:.5;cursor:not-allowed}
 .slot.busy::after{content:"complet";position:absolute;top:6px;right:6px;font-family:var(--font-mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);font-weight:700}
+.slot.busy.closed::after{content:"fermé"}
 
 .slot-info{
   padding:16px;border-radius:12px;background:var(--cream);
@@ -1619,15 +1620,28 @@ function getCatIcon(nom) {
   return DEFAULT_CAT_ICON;
 }
 
+// Certaines options en base ont des clés/valeurs polluées par des retours à la ligne
+// parasites (ex. "choi\n  x" au lieu de "choix") — réparation à la lecture, même logique
+// que lib/carte-options.ts côté DashBoard. On ne touche qu'aux retours à la ligne, pas
+// aux espaces normaux, pour ne pas casser des choix à plusieurs mots ("Sauce blanche").
+function optField(o, name) {
+  for (const k in o) if (k.replace(/\s+/g, '') === name) return o[k];
+  return undefined;
+}
+function cleanToken(s) { return typeof s === 'string' ? s.replace(/\s*[\r\n]+\s*/g, '') : s; }
 function toLocalDish(article, catId, catNom) {
-  const opts = (article.options || []).map(o => ({
-    label: o.nom || '',
-    req: !!o.required,
-    type: o.type === 'multi' ? 'multi' : 'single',
-    choices: (o.choix || []).map(c => ({ v: c })),
-    max: o.max || 99,
-    def: o.type === 'multi' ? [] : ((o.choix || [])[0] || null),
-  }));
+  const opts = (article.options || []).map(o => {
+    const type = cleanToken(optField(o, 'type'));
+    const choix = (optField(o, 'choix') || []).map(cleanToken);
+    return {
+      label: optField(o, 'nom') || '',
+      req: !!optField(o, 'required'),
+      type: type === 'multi' ? 'multi' : 'single',
+      choices: choix.map(c => ({ v: c })),
+      max: optField(o, 'max') || 99,
+      def: type === 'multi' ? [] : (choix[0] ?? null),
+    };
+  });
   return {
     id: article.id,
     cat: catId,
@@ -2339,6 +2353,16 @@ function isOpenNow() {
   const nowMin = now.getHours()*60 + now.getMinutes();
   return isInService(nowMin, sched.lunch) || isInService(nowMin, sched.dinner);
 }
+// Le resto peut être ouvert maintenant mais fermer avant qu'un créneau "+X min" arrive :
+// on vérifie l'horaire projeté, pas seulement l'instant présent (cf. isOpenNow).
+function willBeOpenAt(targetMin) {
+  const info = RESTAURANT_INFO;
+  if (!info?.horaires) return true; // assume open if no info
+  const day = new Date().getDay();
+  const sched = info.horaires[day];
+  if (!sched?.open) return false;
+  return isInService(targetMin, sched.lunch) || isInService(targetMin, sched.dinner);
+}
 function getLaterSlots() {
   const info = RESTAURANT_INFO;
   const slots = [];
@@ -2380,11 +2404,29 @@ function renderSlots(){
       setSlotMode('later');
       return;
     }
-    slots = [
-      {time:'+15 min', sub: isSlotFull('now15') ? 'Créneau complet' : 'Prêt vers ' + plusMinutes(15), busy: isSlotFull('now15'), val:'now15'},
-      {time:'+25 min', sub: isSlotFull('now25') ? 'Créneau complet' : 'Service normal',                busy: isSlotFull('now25'), val:'now25'},
-      {time:'+40 min', sub: isSlotFull('now40') ? 'Créneau complet' : 'Moins de rush',                busy: isSlotFull('now40'), val:'now40'},
+    const nowMin = new Date().getHours()*60 + new Date().getMinutes();
+    const candidates = [
+      {mins:15, sub:'Prêt vers ' + plusMinutes(15)},
+      {mins:25, sub:'Service normal'},
+      {mins:40, sub:'Moins de rush'},
     ];
+    slots = candidates.map(cd => {
+      const val = 'now' + cd.mins;
+      const closed = !willBeOpenAt(nowMin + cd.mins);
+      const full = !closed && isSlotFull(val);
+      return {
+        time: '+' + cd.mins + ' min',
+        sub: closed ? 'Fermé à cette heure' : (full ? 'Créneau complet' : cd.sub),
+        busy: closed || full,
+        closed,
+        val,
+      };
+    });
+    if (slots.every(s => s.closed)) {
+      c.innerHTML = `<div class="slot-info" style="color:var(--red);font-weight:600">Le restaurant ferme trop tôt pour ces créneaux.<br>Choisissez un créneau ultérieur.</div>`;
+      setSlotMode('later');
+      return;
+    }
   } else {
     slots = getLaterSlots();
     if (slots.length === 0) {
@@ -2393,7 +2435,7 @@ function renderSlots(){
     }
   }
   c.innerHTML = `<div class="slots">${slots.map(s=>`
-    <button class="slot ${s.busy?'busy':''} ${selectedSlot&&selectedSlot.val===s.val?'is-selected':''}" ${s.busy?'disabled':''} onclick="selectSlot('${s.val}','${s.time}')">
+    <button class="slot ${s.busy?'busy':''} ${s.closed?'closed':''} ${selectedSlot&&selectedSlot.val===s.val?'is-selected':''}" ${s.busy?'disabled':''} onclick="selectSlot('${s.val}','${s.time}')">
       <strong>${s.time}</strong><small>${s.sub}</small>
     </button>
   `).join('')}</div>`;
