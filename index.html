@@ -23,7 +23,7 @@
 
   --ink:#F5ECD8;
   --ink-2:#E8D8C0;
-  --ink-3:#9A8068;
+  --ink-3:#A88C70;
 
   --red:#E8580A;
   --red-bright:#F06820;
@@ -77,6 +77,10 @@ body::after{
   background:radial-gradient(ellipse at 50% 100%,rgba(232,88,10,.18) 0%,rgba(200,50,0,.06) 45%,transparent 70%);
 }
 
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
@@ -134,6 +138,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
   transition:background .25s var(--ease),transform .25s var(--ease);position:relative;
 }
 .cta-order:hover{background:var(--red-bright);transform:translateY(-1px)}
+.cta-order:active{transform:scale(.96)}
 .cart-count{
   display:none;position:absolute;top:-7px;right:-7px;
   min-width:22px;height:22px;padding:0 6px;
@@ -143,6 +148,36 @@ nav.primary a:hover::after{transform:scaleX(1)}
 }
 .cart-count.is-visible{display:inline-flex}
 @media (max-width:920px){nav.primary{display:none}}
+
+.nav-toggle{
+  display:none;width:44px;height:44px;border-radius:50%;
+  align-items:center;justify-content:center;color:var(--ink);
+  transition:background .2s var(--ease);
+}
+.nav-toggle:hover{background:var(--line-light)}
+@media (max-width:920px){.nav-toggle{display:inline-flex}}
+
+.nav-panel-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  opacity:0;pointer-events:none;transition:opacity .3s var(--ease);z-index:130;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+}
+.nav-panel-bg.is-open{opacity:1;pointer-events:auto}
+.nav-panel{
+  position:fixed;top:0;right:0;bottom:0;width:300px;max-width:82%;
+  background:var(--sand);color:var(--ink);z-index:140;
+  transform:translateX(100%);transition:transform .4s var(--ease);
+  display:flex;flex-direction:column;padding:26px 28px;gap:6px;
+}
+.nav-panel.is-open{transform:translateX(0)}
+.nav-panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.nav-panel a{
+  font-family:var(--font-mono);font-size:16px;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--ink);padding:16px 4px;
+  border-bottom:1px solid var(--line);
+}
+.nav-panel a:active{color:var(--red)}
+.nav-panel .cta-order{margin-top:20px;justify-content:center}
 
 /* ============================================================
    HERO
@@ -192,6 +227,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
   transition:background .25s var(--ease),transform .25s var(--ease);
 }
 .btn-primary:hover{background:var(--red-bright);transform:translateY(-1px)}
+.btn-primary:active{transform:scale(.97)}
 .btn-ghost{
   display:inline-flex;align-items:center;gap:10px;
   padding:17px 26px;background:transparent;
@@ -201,6 +237,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
   transition:border-color .25s var(--ease),color .25s var(--ease);
 }
 .btn-ghost:hover{border-color:var(--red);color:var(--red)}
+.btn-ghost:active{transform:scale(.97)}
 
 .hero-stats{
   display:flex;gap:42px;flex-wrap:wrap;padding-top:32px;
@@ -230,7 +267,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
 .hero-badge{
   position:absolute;bottom:24px;left:24px;right:24px;
   display:flex;justify-content:space-between;align-items:end;
-  color:var(--paper);z-index:2;
+  color:var(--ink);z-index:2;
 }
 .hero-badge .loc{
   font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;
@@ -243,7 +280,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
 .hero-badge .rating{font-family:var(--font-display);font-size:32px;color:var(--gold-bright)}
 .hero-badge .rating small{
   font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;
-  display:block;text-transform:uppercase;font-weight:700;color:var(--paper);margin-top:4px;
+  display:block;text-transform:uppercase;font-weight:700;color:var(--ink);margin-top:4px;
 }
 
 /* ============================================================
@@ -308,7 +345,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
 .feature p{margin:0;font-size:14px;color:var(--ink-3);line-height:1.6}
 .feature .num{
   position:absolute;top:22px;right:24px;
-  font-family:var(--font-mono);font-size:11px;color:rgba(26,20,17,.25);
+  font-family:var(--font-mono);font-size:11px;color:rgba(245,236,216,.25);
   letter-spacing:.18em;font-weight:700;
 }
 
@@ -364,6 +401,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
   cursor:pointer;
 }
 .dish:hover{transform:translateY(-4px);box-shadow:0 30px 50px -25px rgba(26,20,17,.22)}
+.dish:active{transform:scale(.98)}
 .dish-img{
   aspect-ratio:1/1;background:var(--white);overflow:hidden;
   position:relative;display:grid;place-items:center;padding:14px;
@@ -411,7 +449,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
 }
 .dish-meta{
   font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;
-  color:rgba(26,20,17,.5);text-transform:uppercase;font-weight:700;
+  color:var(--ink-3);text-transform:uppercase;font-weight:700;
 }
 .add{
   padding:9px 16px;background:var(--ink);color:var(--paper);
@@ -695,6 +733,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
   transition:background .25s var(--ease);
 }
 .cta-next:hover{background:var(--red)}
+.cta-next:active{transform:scale(.98)}
 .cta-next:disabled{opacity:.4;cursor:not-allowed}
 
 .slot-mode{
@@ -736,7 +775,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
   font-family:var(--font-body);font-size:15px;color:var(--ink);
   transition:border-color .2s var(--ease);
 }
-.field input:focus,.field textarea:focus{outline:none;border-color:var(--ink)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(232,88,10,.28)}
 .field textarea{min-height:78px;resize:vertical}
 .field .hint{font-size:11px;color:var(--ink-3);margin-top:5px;font-family:var(--font-mono);letter-spacing:.05em;font-weight:600}
 
@@ -954,6 +993,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
   transition:background .25s var(--ease);
 }
 .dmodal-add:hover{background:var(--red)}
+.dmodal-add:active{transform:scale(.98)}
 .dmodal-add .total{font-family:var(--font-display);font-size:20px;letter-spacing:0;line-height:1}
 
 /* ============================================================
@@ -969,10 +1009,14 @@ nav.primary a:hover::after{transform:scaleX(1)}
 
 /* Score avis et header du drawer : même logique */
 .reviews-head .score{background:var(--sand);border:1px solid var(--line-strong)}
-.drawer-head{background:var(--sand);border-bottom:1px solid var(--line)}
+.drawer-head{background:var(--sand);border-bottom:1px solid var(--line);color:var(--ink)}
+.drawer-close{color:var(--ink)}
 
 /* Pay pill dans le drawer */
-.pay-pill{background:var(--sand)}
+.pay-pill{background:var(--sand);color:var(--ink)}
+
+/* Icône fermeture du modal plat : texte invisible sur fond sombre sans ce correctif */
+.dmodal-close{color:var(--ink)}
 
 /* Bouton "Envoyer la commande" → orange fire au lieu de crème */
 .cta-next{background:var(--red)}
@@ -1001,6 +1045,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
   transition:all .25s var(--ease);
 }
 .cat-card:hover{background:var(--sand);border-color:var(--line-strong)}
+.cat-card:active{transform:scale(.97)}
 .cat-card.is-active{border-color:var(--gold-bright);background:var(--sand)}
 .cat-icon{
   width:68px;height:68px;margin:0 auto 14px;
@@ -1031,6 +1076,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
 }
 .dish-row-item:last-child{border-bottom:none}
 .dish-row-item:hover{background:var(--sand)}
+.dish-row-item:active{background:var(--sand)}
 .dish-row-info{flex:1;min-width:0}
 .dish-row-name{
   font-family:var(--font-serif);font-style:italic;font-weight:600;
@@ -1052,6 +1098,10 @@ nav.primary a:hover::after{transform:scaleX(1)}
 }
 .dish-row-item:hover .dish-row-btn{display:inline-flex}
 .dish-row-btn:hover{background:var(--red-bright)}
+/* Le survol n'existe pas au tactile : le bouton doit rester visible par défaut sur petit écran */
+@media (hover:none), (max-width:760px){
+  .dish-row-btn{display:inline-flex}
+}
 
 /* ---- Sous-onglets Pizza ---- */
 .pizza-tabs-wrap{
@@ -1066,6 +1116,31 @@ nav.primary a:hover::after{transform:scaleX(1)}
 }
 .pizza-tab:hover{border-color:var(--gold);color:var(--ink)}
 .pizza-tab.is-active{background:var(--red);border-color:var(--red);color:var(--ink)}
+
+/* ============================================================
+   MARQUEE PAUSE CONTROL
+============================================================ */
+.marquee{position:relative}
+.marquee-pause{
+  position:absolute;top:50%;right:20px;transform:translateY(-50%);
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:rgba(14,11,8,.18);color:var(--paper);
+  display:grid;place-items:center;transition:background .2s var(--ease);z-index:2;
+}
+.marquee-pause:hover,.marquee-pause:focus-visible{background:rgba(14,11,8,.32)}
+.r-marquee{position:relative}
+.r-marquee .marquee-pause{top:-10px;right:8px;background:var(--sand);color:var(--ink)}
+.r-marquee .marquee-pause:hover,.r-marquee .marquee-pause:focus-visible{background:var(--white)}
+
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+@media (prefers-reduced-motion: reduce){
+  .marquee-track,.r-row{animation-play-state:paused}
+  .dish,.feature,.cat-card,.vibe-card,.dish-img img,.fab-cart,.confirm .check,.step{transition:none !important;animation:none !important}
+  .drawer,.dmodal,.nav-panel{transition:transform .15s linear,opacity .15s linear !important}
+  .dmodal-bg,.drawer-bg,.nav-panel-bg{transition:opacity .15s linear !important}
+}
 
 </style>
 </head>
@@ -1087,8 +1162,29 @@ nav.primary a:hover::after{transform:scaleX(1)}
       <span>Commander</span>
       <span class="cart-count" id="cartCount">0</span>
     </button>
+    <button class="nav-toggle" onclick="openNavPanel()" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="navPanel">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
   </div>
 </header>
+
+<!-- MOBILE NAV PANEL -->
+<div class="nav-panel-bg" id="navPanelBg" onclick="closeNavPanel()"></div>
+<nav class="nav-panel" id="navPanel" role="dialog" aria-modal="true" aria-label="Menu de navigation">
+  <div class="nav-panel-head">
+    <span class="eyebrow">Menu</span>
+    <button class="drawer-close" onclick="closeNavPanel()" aria-label="Fermer le menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <a href="#menu" onclick="closeNavPanel()">La carte</a>
+  <a href="#story" onclick="closeNavPanel()">Notre histoire</a>
+  <a href="#reviews" onclick="closeNavPanel()">Avis</a>
+  <a href="#find" onclick="closeNavPanel()">Trouver</a>
+  <button class="cta-order" onclick="closeNavPanel();openDrawer()">
+    <span>Commander</span>
+  </button>
+</nav>
 
 <!-- HERO -->
 <section class="hero">
@@ -1131,11 +1227,14 @@ nav.primary a:hover::after{transform:scaleX(1)}
 </section>
 
 <!-- MARQUEE TOP -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
+<div class="marquee">
+  <div class="marquee-track" id="marqueeTrack" aria-hidden="true">
     <span>MAKLOUB MAISON <i>·</i> KEBAB FAIT À LA BROCHE <i>·</i> PIZZAS XL À PARTAGER <i>·</i> BURGERS GÉNÉREUX <i>·</i> TACOS MAISON <i>·</i> COMMANDEZ EN LIGNE <i>·</i> RUE COLBERT × LILLE <i>·</i></span>
     <span>MAKLOUB MAISON <i>·</i> KEBAB FAIT À LA BROCHE <i>·</i> PIZZAS XL À PARTAGER <i>·</i> BURGERS GÉNÉREUX <i>·</i> TACOS MAISON <i>·</i> COMMANDEZ EN LIGNE <i>·</i> RUE COLBERT × LILLE <i>·</i></span>
   </div>
+  <button class="marquee-pause" id="marqueePauseBtn" onclick="toggleMarquee()" aria-label="Mettre en pause le bandeau défilant" aria-pressed="false">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+  </button>
 </div>
 
 <!-- STORY -->
@@ -1236,9 +1335,13 @@ nav.primary a:hover::after{transform:scaleX(1)}
   </div>
 
   <div class="r-marquee">
-    <div class="r-row" id="rrow1"></div>
-    <div class="r-row reverse" id="rrow2"></div>
+    <div class="r-row" id="rrow1" aria-hidden="true"></div>
+    <div class="r-row reverse" id="rrow2" aria-hidden="true"></div>
+    <button class="marquee-pause" id="reviewsPauseBtn" onclick="toggleReviewsMarquee()" aria-label="Mettre en pause le défilement des avis" aria-pressed="false">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+    </button>
   </div>
+  <ul class="sr-only" id="reviewsSrList"></ul>
 </section>
 
 <!-- FIND -->
@@ -1356,7 +1459,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
 
 <!-- DISH DETAIL MODAL -->
 <div class="dmodal-bg" id="dmodalBg" onclick="closeDish()"></div>
-<div class="dmodal" id="dmodal" role="dialog" aria-label="Détail du plat">
+<div class="dmodal" id="dmodal" role="dialog" aria-modal="true" aria-labelledby="dmName">
   <div class="dmodal-img">
     <button class="dmodal-close" onclick="closeDish()" aria-label="Fermer">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -1378,9 +1481,9 @@ nav.primary a:hover::after{transform:scaleX(1)}
     </div>
     <div class="dmodal-foot">
       <div class="qty-stepper">
-        <button onclick="dmQty(-1)">−</button>
+        <button onclick="dmQty(-1)" aria-label="Diminuer la quantité">−</button>
         <span id="dmQty">1</span>
-        <button onclick="dmQty(1)">+</button>
+        <button onclick="dmQty(1)" aria-label="Augmenter la quantité">+</button>
       </div>
       <button class="dmodal-add" onclick="addFromModal()">
         <span>Ajouter</span>
@@ -1392,7 +1495,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
 
 <!-- ORDER DRAWER -->
 <div class="drawer-bg" id="drawerBg" onclick="closeDrawer()"></div>
-<aside class="drawer" id="drawer" role="dialog" aria-label="Votre commande">
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
   <div class="drawer-head">
     <div>
       <h3 id="drawerTitle">Votre panier</h3>
@@ -1456,7 +1559,7 @@ nav.primary a:hover::after{transform:scaleX(1)}
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         <h3>C'EST <em>parti.</em></h3>
-        <div id="orderStatus" style="display:none;align-items:center;justify-content:center;gap:10px;padding:10px 20px;border-radius:999px;border:1.5px solid #e4e4e7;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:14px auto 4px;transition:all .4s ease;max-width:280px"></div>
+        <div id="orderStatus" style="display:none;align-items:center;justify-content:center;gap:10px;padding:10px 20px;border-radius:999px;border:1.5px solid var(--line-strong);font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:14px auto 4px;transition:all .4s ease;max-width:280px"></div>
         <p>L'équipe valide votre commande dans la minute. Vous allez recevoir un SMS de confirmation.</p>
         <div class="ticket" id="ticket">
           <div id="orderItems"></div>
@@ -1735,6 +1838,64 @@ let currentDish = null;
 let currentOpts = {};
 let currentQty = 1;
 let currentSize = null;
+let lastFocused = null;
+let trapEl = null;
+
+/* ============================================================
+   FOCUS TRAP (dialogues clavier-accessibles)
+============================================================ */
+function trapFocus(el){
+  trapEl = el;
+  const focusable = el.querySelectorAll('a[href],button:not([disabled]),input,textarea,[tabindex]:not([tabindex="-1"])');
+  if(focusable.length) focusable[0].focus();
+}
+function releaseFocusTrap(){ trapEl = null; }
+document.addEventListener('keydown', e => {
+  if(e.key !== 'Tab' || !trapEl) return;
+  const focusable = Array.from(trapEl.querySelectorAll('a[href],button:not([disabled]),input,textarea,[tabindex]:not([tabindex="-1"])'));
+  if(!focusable.length) return;
+  const first = focusable[0], last = focusable[focusable.length-1];
+  if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+  else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+});
+
+/* ============================================================
+   MOBILE NAV PANEL
+============================================================ */
+function openNavPanel(){
+  document.getElementById('navPanel').classList.add('is-open');
+  document.getElementById('navPanelBg').classList.add('is-open');
+  document.querySelector('.nav-toggle').setAttribute('aria-expanded','true');
+  document.body.style.overflow = 'hidden';
+  lastFocused = document.activeElement;
+  trapFocus(document.getElementById('navPanel'));
+}
+function closeNavPanel(){
+  document.getElementById('navPanel').classList.remove('is-open');
+  document.getElementById('navPanelBg').classList.remove('is-open');
+  document.querySelector('.nav-toggle').setAttribute('aria-expanded','false');
+  document.body.style.overflow = '';
+  releaseFocusTrap();
+  if(lastFocused) lastFocused.focus();
+}
+
+/* ============================================================
+   MARQUEE PAUSE CONTROLS
+============================================================ */
+function toggleMarquee(){
+  const track = document.getElementById('marqueeTrack');
+  const btn = document.getElementById('marqueePauseBtn');
+  const paused = track.style.animationPlayState === 'paused';
+  track.style.animationPlayState = paused ? 'running' : 'paused';
+  btn.setAttribute('aria-pressed', String(!paused));
+}
+function toggleReviewsMarquee(){
+  const rows = document.querySelectorAll('.r-row');
+  const btn = document.getElementById('reviewsPauseBtn');
+  const paused = rows[0] && rows[0].style.animationPlayState === 'paused';
+  rows.forEach(r => r.style.animationPlayState = paused ? 'running' : 'paused');
+  btn.setAttribute('aria-pressed', String(!paused));
+}
 
 // Menu is rendered by renderFeatured() / showFullMenu() / filterMenu() via loadRestaurant()
 
@@ -1789,6 +1950,8 @@ function openDish(id){
   document.getElementById('dmodalBg').classList.add('is-open');
   document.getElementById('dmodal').classList.add('is-open');
   document.body.style.overflow = 'hidden';
+  lastFocused = document.activeElement;
+  trapFocus(document.getElementById('dmodal'));
 }
 
 function closeDish(){
@@ -1797,6 +1960,8 @@ function closeDish(){
   if(!document.getElementById('drawer').classList.contains('is-open')){
     document.body.style.overflow = '';
   }
+  releaseFocusTrap();
+  if(lastFocused) lastFocused.focus();
 }
 
 function renderOpts(){
@@ -2000,9 +2165,9 @@ function renderCartList(){
         <p class="name">${i.name}</p>
         ${i.opts ? `<p class="opts">${i.opts}</p>` : ''}
         <div class="qty">
-          <button onclick="decLine(${idx})">−</button>
+          <button onclick="decLine(${idx})" aria-label="Diminuer la quantité de ${i.name}">−</button>
           <span>${i.qty}</span>
-          <button onclick="incLine(${idx})">+</button>
+          <button onclick="incLine(${idx})" aria-label="Augmenter la quantité de ${i.name}">+</button>
         </div>
       </div>
       <div class="p">${(i.price * i.qty).toFixed(2).replace('.',',')} €</div>
@@ -2019,6 +2184,8 @@ function openDrawer(skipAuto){
   document.getElementById('drawer').classList.add('is-open');
   document.getElementById('drawerBg').classList.add('is-open');
   document.body.style.overflow = 'hidden';
+  lastFocused = document.activeElement;
+  trapFocus(document.getElementById('drawer'));
 }
 function closeDrawer(){
   if (orderPollInterval) { clearInterval(orderPollInterval); orderPollInterval = null; }
@@ -2027,6 +2194,8 @@ function closeDrawer(){
   document.getElementById('drawer').classList.remove('is-open');
   document.getElementById('drawerBg').classList.remove('is-open');
   document.body.style.overflow = '';
+  releaseFocusTrap();
+  if(lastFocused) lastFocused.focus();
   setTimeout(()=>{ goToStep(1); }, 400);
 }
 
@@ -2316,6 +2485,10 @@ function renderReviews(){
   // duplicate each row content twice for seamless loop
   document.getElementById('rrow1').innerHTML = row1.concat(row1).map(renderReviewCard).join('');
   document.getElementById('rrow2').innerHTML = row2.concat(row2).map(renderReviewCard).join('');
+  // liste réelle, non dupliquée, exposée aux lecteurs d'écran
+  document.getElementById('reviewsSrList').innerHTML = REVIEWS.map(r =>
+    `<li>${r.n}, ${r.t} : "${r.q}"</li>`
+  ).join('');
 }
 renderReviews();
 
@@ -2327,6 +2500,7 @@ document.addEventListener('keydown', e => {
   if(e.key==='Escape'){
     if(document.getElementById('dmodal').classList.contains('is-open')) closeDish();
     else if(document.getElementById('drawer').classList.contains('is-open')) closeDrawer();
+    else if(document.getElementById('navPanel').classList.contains('is-open')) closeNavPanel();
   }
 });
 
